@@ -22,6 +22,7 @@ router.post('/movies',
         .pattern(new RegExp('https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)')),
       nameRU: Joi.string().required(),
       nameEN: Joi.string().required(),
+      movieId: Joi.string().required(),
     }),
   }), createMovie);
 router.delete('/movies/:movieId',

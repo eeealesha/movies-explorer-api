@@ -20,6 +20,7 @@ const createMovie = (req, res, next) => {
     thumbnail: req.body.thumbnail,
     nameRU: req.body.nameRU,
     nameEN: req.body.nameEN,
+    movieId: req.body.movieId,
   })
     .then((movies) => {
       res.status(200).send(movies);
@@ -36,7 +37,6 @@ const deleteMovie = (req, res, next) => {
   const id = req.user._id;
   Movie.findById(req.params.movieId)
     .then((movie) => {
-      console.log(movie);
       if (!movie) {
         throw new NotFoundError('Нет фильма с таким id');
       }

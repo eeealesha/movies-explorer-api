@@ -16,9 +16,12 @@ const moviesRouter = require('./routes/movies');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { limiter } = require('./middlewares/ratelimit');
 const NotFoundError = require('./errors/not-found-error');
 
 const { PORT = 3000 } = process.env;
+
+app.use(limiter);
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
