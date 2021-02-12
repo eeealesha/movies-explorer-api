@@ -44,9 +44,8 @@ const deleteMovie = (req, res, next) => {
         throw new BadReqError('Не ты владелец фильма с таким id');
       } else {
         Movie.findByIdAndDelete(req.params.movieId)
-        // eslint-disable-next-line no-shadow
-          .then((movie) => {
-            res.status(200).send(movie);
+          .then((item) => {
+            res.status(200).send(item);
           })
           .catch(next);
       }

@@ -19,11 +19,12 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { limiter } = require('./middlewares/ratelimit');
 const NotFoundError = require('./errors/not-found-error');
 
+const { MONGODB } = process.env;
 const { PORT = 3000 } = process.env;
 
 app.use(limiter);
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(`${MONGODB}`, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true,
