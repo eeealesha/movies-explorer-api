@@ -1,0 +1,33 @@
+.Navigation {
+    display: flex;
+    justify-content: space-around;
+}
+
+.Navigation_button {
+    width: 76px;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    text-decoration: none;
+}
+
+.Navigation_button_type_enter {
+    background: #2BE080;
+    border-radius: 3px;
+}
+
+.Navigation_button_type_account {
+    width: 100px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
