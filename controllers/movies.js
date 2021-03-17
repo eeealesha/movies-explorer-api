@@ -45,7 +45,7 @@ const deleteMovie = (req, res, next) => {
       if (movie.owner.toString() !== id) {
         throw new ForbiddenError("Не ты владелец фильма с таким id");
       } else {
-        Movie.findByIdAndRemove(movieID)
+        Movie.findByIdAndDelete(movieID)
           .then((item) => {
             res.status(200).send(item);
           })
