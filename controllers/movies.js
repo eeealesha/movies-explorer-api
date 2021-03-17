@@ -34,25 +34,50 @@ const createMovie = (req, res, next) => {
     .catch(next);
 };
 
+// const deleteMovie = (req, res, next) => {
+//   const id = req.user._id;
+//   const movieID = req.params;
+//   Movie.findById(movieID)
+//     .then((movie) => {
+//       if (!movie) {
+//         throw new NotFoundError("Нет фильма с таким id");
+//       }
+//       if (movie.owner.toString() !== id) {
+//         throw new ForbiddenError("Не ты владелец фильма с таким id");
+//       } else {
+//         Movie.findByIdAndDelete(movieID)
+//           .then((item) => {
+//             res.status(200).send(item);
+//           })
+//           .catch(next);
+//       }
+//     })
+//     .catch(next);
+// };
+
 const deleteMovie = (req, res, next) => {
-  const id = req.user._id;
-  const movieID = req.params;
-  Movie.findById(movieID)
+  const { movieId } = req.params;
+  movieModel
+    .findById(movieId)
+    .select("+owner")
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError("Нет фильма с таким id");
+        throw new NotFoundError(errorMessages.notFoundFilm);
       }
-      if (movie.owner.toString() !== id) {
-        throw new ForbiddenError("Не ты владелец фильма с таким id");
-      } else {
-        Movie.findByIdAndDelete(movieID)
-          .then((item) => {
-            res.status(200).send(item);
-          })
-          .catch(next);
+      if (movie.owner.toString() !== req.user._id) {
+        throw new Forbidden(errorMessages.notAllow);
       }
+      movieModel
+        .findByIdAndRemove(movieId)
+        .then((data) => res.status(200).send(data));
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.kind === "ObjectId" || err.kind === "CastError") {
+        next(new BadRequestError(errorMessages.badRequest));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports = {
