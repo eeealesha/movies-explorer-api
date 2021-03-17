@@ -36,8 +36,8 @@ const createMovie = (req, res, next) => {
 
 const deleteMovie = (req, res, next) => {
   const id = req.user._id;
-  const movieID = req.params;
-  Movie.findById(movieID.toString())
+  const movieID = req.params.movieID;
+  Movie.findById(movieID)
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError("Нет фильма с таким id");
@@ -45,7 +45,7 @@ const deleteMovie = (req, res, next) => {
       if (movie.owner.toString() !== id) {
         throw new ForbiddenError("Не ты владелец фильма с таким id");
       } else {
-        Movie.findByIdAndRemove(movieID.toString())
+        Movie.findByIdAndRemove(movieID)
           .then((item) => {
             res.status(200).send(item);
           })
